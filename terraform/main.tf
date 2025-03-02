@@ -69,7 +69,7 @@ resource "aws_db_instance" "testdatabaseinstance" {
 }
 
 output "db_host" {
-  value = aws_db_instance.tstDBInstance.endpoint
+  value = aws_db_instance.testdatabaseinstance.endpoint
   description = "The endpoint of the SQL Server RDS instance"
 }
 
