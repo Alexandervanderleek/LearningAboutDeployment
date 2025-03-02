@@ -11,7 +11,7 @@ terraform {
     }
 }
 
-provider "s3" {
+provider "aws" {
   region = "af-south-1"
 }
 
@@ -55,7 +55,7 @@ resource "aws_db_instance" "tstDBInstance" {
   username = var.db_username
   password = var.db_password
   skip_final_snapshot = true
-  vpc_security_group_ids = [aws_security_group.allow_mssql]
+  vpc_security_group_ids = [aws_security_group.allow_mssql.id]
   tags = {
     Name = "tstDBInstance"
   }
