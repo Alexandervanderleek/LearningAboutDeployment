@@ -30,7 +30,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::195380356622:role/GithubOIDC
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION_NAME }}
 
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
