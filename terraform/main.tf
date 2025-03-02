@@ -44,7 +44,7 @@ resource "aws_security_group" "allow_mssql" {
   }
 }
 
-resource "aws_db_instance" "tstDBInstance" {
+resource "aws_db_instance" "testdatabaseinstance" {
   identifier = var.db_instance_identifier
   engine = "sqlserver-ex"
   engine_version = "15.00.4415.2.v1"
