@@ -7,12 +7,12 @@ terraform {
     }
 
     backend "s3" {
-        region = "af-south-1"
+        region = var.aws_region
     }
 }
 
 provider "aws" {
-  region = "af-south-1"
+  region = var.aws_region
 }
 
 resource "aws_default_vpc" "default_vpc" {
@@ -45,7 +45,7 @@ resource "aws_security_group" "allow_mssql" {
 }
 
 resource "aws_db_instance" "tstDBInstance" {
-  identifier = "tstDBInstance"
+  identifier = var.db_instance_identifier
   engine = "sqlserver-ex"
   engine_version = "15.00.4415.2.v1"
   instance_class = "db.t3.micro"
@@ -57,12 +57,12 @@ resource "aws_db_instance" "tstDBInstance" {
   skip_final_snapshot = true
   vpc_security_group_ids = [aws_security_group.allow_mssql.id]
   tags = {
-    Name = "tstDBInstance"
+    Name = var.db_instance_identifier
   }
 
   provisioner "local-exec" {
     command = <<-EOT
-        sqlcmd -S ${replace(self.endpoint, ":", ",")} -U ${self.username} -P '${self.password}' -C -Q "CREATE DATABASE TestDatabase;";
+        sqlcmd -S ${replace(self.endpoint, ":", ",")} -U ${self.username} -P '${self.password}' -C -Q "CREATE DATABASE ${var.db_name};";
         EOT
         interpreter = [ "pwsh","-Command" ] 
     }
@@ -71,4 +71,9 @@ resource "aws_db_instance" "tstDBInstance" {
 output "db_host" {
   value = aws_db_instance.tstDBInstance.endpoint
   description = "The endpoint of the SQL Server RDS instance"
+}
+
+output "db_name" {
+  value = var.db_name
+  description = "The database name"
 }
