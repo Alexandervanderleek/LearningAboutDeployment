@@ -75,4 +75,4 @@ jobs:
 
       - name: Run Flyway Migrations
         run: |
-          docker run --rm --volume ${{ github.workspace }}/migrations:/flyway/sql:ro redgate/flyway -url="jdbc:sqlserver://${{ needs.terraform.outputs.dbhost }};databaseName=${{ needs.terraform.outputs.dbname }};encrypt=false;trustServerCertificate=true;" -user="${{ secrets.TF_VAR_DB_USERNAME }}" -password="${{ secrets.TF_VAR_DB_PASSWORD}}" -placeholders.RESTRICTED_USER_PASSWORD="${{ secrets.DB_RESTRICTED_USER_PASSWORD }}" migrate
+          docker run --rm --volume ${{ github.workspace }}/migrations:/flyway/sql:ro redgate/flyway -url="jdbc:sqlserver://${{ needs.terraform.outputs.dbhost }};databaseName=${{ vars.TF_VAR_DB_NAME }};encrypt=false;trustServerCertificate=true;" -user="${{ secrets.TF_VAR_DB_USERNAME }}" -password="${{ secrets.TF_VAR_DB_PASSWORD}}" -placeholders.RESTRICTED_USER_PASSWORD="${{ secrets.DB_RESTRICTED_USER_PASSWORD }}" migrate
